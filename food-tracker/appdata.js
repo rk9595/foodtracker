@@ -28,4 +28,7 @@ export default class AppData {
         return total + current.fat;
       }, 0);
     }
+    getTotalCalories() {
+        return this.getTotalCarbs() * 4 + this.getTotalProtein() * 4 + this.getTotalFat() * 9;
+      }
   }

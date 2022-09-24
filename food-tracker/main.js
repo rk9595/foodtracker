@@ -116,5 +116,15 @@ const renderChart = () => {
     }
   });
 };
+const totalCalories = document.querySelector("#total-calories");
+
+const updateTotalCalories = () => {
+    totalCalories.textContent = appData.getTotalCalories();
+}
+
+const render = () => {
+    renderChart();
+    updateTotalCalories();
+}
 
 init();
