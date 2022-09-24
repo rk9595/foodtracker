@@ -1,23 +1,36 @@
-import './style.css'
-import javascriptLogo from './javascript.svg'
-import { setupCounter } from './counter.js'
+// TODO
+import FetchWrapper from "./fetch-wrapper.js";
 
-document.querySelector('#app').innerHTML = `
-  <div>
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank">
-      <img src="${javascriptLogo}" class="logo vanilla" alt="JavaScript logo" />
-    </a>
-    <h1>Hello Vite!</h1>
-    <div class="card">
-      <button id="counter" type="button"></button>
-    </div>
-    <p class="read-the-docs">
-      Click on the Vite logo to learn more
-    </p>
-  </div>
-`
+const API = new FetchWrapper(
+  "https://firestore.googleapis.com/v1/projects/jsdemo-3f387/databases/(default)/documents/RK7"
+);
 
-setupCounter(document.querySelector('#counter'))
+const form = document.querySelector("#create-form");
+const name = document.querySelector("#create-name");
+const carbs = document.querySelector("#create-carbs");
+const protein = document.querySelector("#create-protein");
+const fat = document.querySelector("#create-fat");
+
+form.addEventListener("submit", (event) => {
+  event.preventDefault();
+
+  API.post("/", {
+    fields: {
+      name: { stringValue: name.value },
+      carbs: { integerValue: carbs.value },
+      protein: { integerValue: protein.value },
+      fat: { integerValue: fat.value },
+    },
+  }).then((data) => {
+    console.log(data);
+    if (data.error) {
+        // there was an error
+        return;
+    }
+
+    name.value = "";
+    carbs.value = "";
+    protein.value = "";
+    fat.value = "";
+  });
+});
