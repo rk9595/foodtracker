@@ -29,6 +29,10 @@ export default class AppData {
       }, 0);
     }
     getTotalCalories() {
-        return this.getTotalCarbs() * 4 + this.getTotalProtein() * 4 + this.getTotalFat() * 9;
+        return (
+            this.getTotalCarbs() * 4 + 
+            this.getTotalProtein() * 4 +
+             this.getTotalFat() * 9
+        );
       }
   }

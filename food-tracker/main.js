@@ -7,12 +7,11 @@ import Chart from "chart.js/auto";
 import "snackbar/dist/snackbar.min.css";
 import './style.css'
 
-
-const appData = new AppData;
-
 const API = new FetchWrapper(
   "https://firestore.googleapis.com/v1/projects/jsdemo-3f387/databases/(default)/documents/RK7"
 );
+
+const appData = new AppData;
 
 const list = document.querySelector("#food-list");
 const form = document.querySelector("#create-form");
@@ -20,6 +19,7 @@ const name = document.querySelector("#create-name");
 const carbs = document.querySelector("#create-carbs");
 const protein = document.querySelector("#create-protein");
 const fat = document.querySelector("#create-fat");
+
 const displayEntry = (name, carbs, protein, fat) => {
 appData.addFood(carbs, protein, fat);
 
@@ -63,6 +63,8 @@ form.addEventListener("submit", (event) => {
     }
     snackbar.show("Food added successfully.");
     
+    displayEntry(name.value, carbs.value, protein.value, fat.value);
+    render();
 
     name.value = "";
     carbs.value = "";
@@ -74,7 +76,6 @@ form.addEventListener("submit", (event) => {
 const init = () => {
   // the ?pageSize=100 is optional
   API.get("/?pageSize=100").then((data) => {
-    console.log(data)
     data.documents?.forEach((doc) => {
       const fields = doc.fields;
 
@@ -88,6 +89,7 @@ const init = () => {
     renderChart();
   });
 }
+
 let chartInstance = null;
 const renderChart = () => {
   chartInstance?.destroy();
@@ -126,6 +128,6 @@ const updateTotalCalories = () => {
 const render = () => {
     renderChart();
     updateTotalCalories();
-}
+};
 
 init();
