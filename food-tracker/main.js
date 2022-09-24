@@ -1,10 +1,11 @@
 // TODO
 import FetchWrapper from "./fetch-wrapper.js";
-import {capitalize, calculateCalories} from "./helpers.js";
+import {capitalize, calculateCalories} from "./helper.js";
 import snackbar from "snackbar";
-import AppData from "./app-data.js";
-import 'chart.js';
-
+import AppData from "./appdata.js";
+import Chart from "chart.js/auto";
+import "snackbar/dist/snackbar.min.css";
+import './style.css'
 
 
 const appData = new AppData;
