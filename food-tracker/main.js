@@ -1,7 +1,9 @@
 // TODO
 import FetchWrapper from "./fetch-wrapper.js";
 import {capitalize, calculateCalories} from "./helpers.js";
+import snackbar from "snackbar";
 
+snackbar.show("Food added successfully.");
 
 const API = new FetchWrapper(
   "https://firestore.googleapis.com/v1/projects/jsdemo-3f387/databases/(default)/documents/RK7"
@@ -28,9 +30,10 @@ form.addEventListener("submit", (event) => {
     console.log(data);
     if (data.error) {
         // there was an error
-        console.log("error")
-        return;
+      snackbar.show("Some data is missing.");
+      return;
     }
+    snackbar.show("Food added successfully.");
     list.insertAdjacentHTML(
       "beforeend",
       `<li class="card">
