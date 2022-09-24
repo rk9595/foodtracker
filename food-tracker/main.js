@@ -2,8 +2,12 @@
 import FetchWrapper from "./fetch-wrapper.js";
 import {capitalize, calculateCalories} from "./helpers.js";
 import snackbar from "snackbar";
+import AppData from "./app-data.js";
+import 'chart.js';
 
-snackbar.show("Food added successfully.");
+
+
+const appData = new AppData;
 
 const API = new FetchWrapper(
   "https://firestore.googleapis.com/v1/projects/jsdemo-3f387/databases/(default)/documents/RK7"
@@ -16,6 +20,8 @@ const carbs = document.querySelector("#create-carbs");
 const protein = document.querySelector("#create-protein");
 const fat = document.querySelector("#create-fat");
 const displayEntry = (name, carbs, protein, fat) => {
+appData.addFood(carbs, protein, fat);
+
   list.insertAdjacentHTML(
     "beforeend",
     `<li class="card">
@@ -78,7 +84,37 @@ const init = () => {
         fields.fat.integerValue
       );
     });
+    renderChart();
   });
 }
+let chartInstance = null;
+const renderChart = () => {
+  chartInstance?.destroy();
+  const context = document.querySelector("#app-chart").getContext("2d");
+
+  chartInstance = new Chart(context, {
+    type: "bar",
+    data: {
+      labels: ["Carbs", "Protein", "Fat"],
+      datasets: [
+        {
+          label: "Macronutrients",
+          data: [appData.getTotalCarbs(), appData.getTotalProtein(), appData.getTotalFat()],
+          backgroundColor: ["#25AEEE", "#FECD52", "#57D269"],
+          borderWidth: 3, // example of other customization
+        },
+      ],
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        }
+    }
+  });
+};
 
 init();
