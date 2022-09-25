@@ -102,7 +102,11 @@ const renderChart = () => {
       datasets: [
         {
           label: "Macronutrients",
-          data: [appData.getTotalCarbs(), appData.getTotalProtein(), appData.getTotalFat()],
+          data: [
+            appData.getTotalCarbs(),
+            appData.getTotalProtein(), 
+            appData.getTotalFat(),
+          ],
           backgroundColor: ["#25AEEE", "#FECD52", "#57D269"],
           borderWidth: 3, // example of other customization
         },
@@ -112,11 +116,12 @@ const renderChart = () => {
         scales: {
             yAxes: [{
                 ticks: {
-                    beginAtZero: true
-                }
-            }]
-        }
-    }
+                    beginAtZero: true,
+                },
+            },
+          ],
+        },
+    },
   });
 };
 const totalCalories = document.querySelector("#total-calories");
